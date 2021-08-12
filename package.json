@@ -1,0 +1,16 @@
+{
+  "name": "sys-top",
+  "version": "1.0.0",
+  "description": "App to monitor your system CPU",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JMNdao",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^13.1.9",
+    "electron-log": "^4.4.1",
+    "nodemon": "^2.0.12"
+  }
+}
