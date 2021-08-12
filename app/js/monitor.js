@@ -57,3 +57,14 @@ const secondsToDhms = (seconds) => {
     const s = Math.floor(seconds % 60);
     return `${d}d, ${h}h, ${m}m, ${s}s`;
 };
+
+// Send notification
+const notifyUser = (options) => {
+    new Notification(options.title, options);
+};
+
+notifyUser({
+    title: 'CPU Overload',
+    body: `CPU is over ${cpuOverload} %`,
+    icon: path.join(__dirname, 'img', 'icon.png'),
+})
