@@ -12,10 +12,9 @@ let mainWindow;
 const createMainWindow = () => {
     mainWindow = new BrowserWindow({
         title: "SysTop",
-        width: isDev ? 800 : 500,
-        height: 600,
+        width: isDev ? 700 : 355,
+        height: 500,
         icon: `${__dirname}/assets/icons/icon.png`,
-        backgroundColor: 'white',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
