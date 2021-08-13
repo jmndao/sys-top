@@ -6,8 +6,42 @@ const cpu = osu.cpu;
 const mem = osu.mem;
 const os = osu.os;
 
-let cpuOverload = 70;
-let alertFrequency = 5;
+let cpuOverload;
+let alertFrequency;
+
+// Get Settings
+ipcRenderer.on('settings:get', (e, settings) => {
+    document.getElementById('cpu-overload').value = settings.cpuOverload;
+    document.getElementById('alert-frequency').value = settings.alertFrequency;
+    cpuOverload = +settings.cpuOverload;
+    alertFrequency = +settings.alertFrequency;
+});
+
+// Alert function
+const showAlert = (msg) => {
+    const alert = document.getElementById('alert');
+    alert.classList.remove('hide');
+    alert.classList.add('alert');
+    alert.innerText = msg;
+
+    setTimeout(() => alert.classList.add('hide'), 3000);
+}
+
+// Submit Settings
+const settingsForm = document.getElementById('settings-form');
+settingsForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const cpuOverload = document.getElementById('cpu-overload').value;
+    const alertFrequency = document.getElementById('alert-frequency').value;
+
+    // Send new settings to main Process
+    ipcRenderer.send('settings:set', {
+        cpuOverload,
+        alertFrequency
+    });
+
+    showAlert('Settings saved');
+})
 
 // Send notification
 const notifyUser = (options) => {
@@ -94,35 +128,3 @@ const secondsToDhms = (seconds) => {
     const s = Math.floor(seconds % 60);
     return `${d}d, ${h}h, ${m}m, ${s}s`;
 };
-
-// Get Settings
-ipcRenderer.on('settings:get', (e, settings) => {
-    document.getElementById('cpu-overload').value = settings.cpuOverload;
-    document.getElementById('alert-frequency').value = settings.alertFrequency;
-});
-
-// Alert function
-const showAlert = (msg) => {
-    const alert = document.getElementById('alert');
-    alert.classList.remove('hide');
-    alert.classList.add('alert');
-    alert.innerText = msg;
-
-    setTimeout(() => alert.classList.add('hide'), 3000);
-}
-
-// Submit Settings
-const settingsForm = document.getElementById('settings-form');
-settingsForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const cpuOverload = document.getElementById('cpu-overload').value;
-    const alertFrequency = document.getElementById('alert-frequency').value;
-
-    // Send new settings to main Process
-    ipcRenderer.send('settings:set', {
-        cpuOverload,
-        alertFrequency
-    });
-
-    showAlert('Settings saved');
-})
