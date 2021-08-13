@@ -128,3 +128,9 @@ const secondsToDhms = (seconds) => {
     const s = Math.floor(seconds % 60);
     return `${d}d, ${h}h, ${m}m, ${s}s`;
 };
+
+// Toggle Navigation
+const nav = document.getElementById('nav');
+ipcRenderer.on('nav:toggle', () => {
+    nav.classList.toggle('hide');
+})
