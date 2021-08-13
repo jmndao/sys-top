@@ -1,5 +1,6 @@
 const path = require("path");
 const osu = require("node-os-utils");
+const { ipcRenderer } = require("electron");
 
 const cpu = osu.cpu;
 const mem = osu.mem;
@@ -93,3 +94,8 @@ const secondsToDhms = (seconds) => {
     const s = Math.floor(seconds % 60);
     return `${d}d, ${h}h, ${m}m, ${s}s`;
 };
+
+ipcRenderer.on('settings:get', (e, settings) => {
+    document.getElementById('cpu-overload').value = settings.cpuOverload;
+    document.getElementById('alert-frequency').value = settings.alertFrequency;
+});
